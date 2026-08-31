@@ -679,6 +679,7 @@ static int tg_parse_build(tg_config_t *config,
     }
 
     rule->language = tg_detect_language(source);
+    if (tg_copy_string(rule->object, sizeof(rule->object), source) != TG_SUCCESS) return TG_PARSE_ERROR;
     rule->line = line_number;
 
     config->build_count++;
@@ -1404,7 +1405,7 @@ static int tg_remove_output(const char *filename)
 int main(int argc, char **argv)
 {
     tg_options_t options;
-    tg_config_t config;
+    static tg_config_t config;
     int result;
 
     tg_options_init(&options);
